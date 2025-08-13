@@ -1,16 +1,24 @@
-import LoginButton from './utils/LoginButton'
-import LogoutButton from './utils/LogoutButton'
-import Profile from './utils/Profile'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import CoursesPage from "./pages/CoursesPage";
+import LessonPage from "./pages/LessonPage";
 
-function App() {
+export default function App() {
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Auth0 + React (Vite) Example</h1>
-      <LoginButton />
-      <LogoutButton />
-      <Profile />
-    </div>
-  )
-}
+    <Router>
+      <Routes>
+        {/* Login / Signup page */}
+        <Route path="/" element={<LoginPage />} />
 
-export default App
+        {/* Course list after login */}
+        <Route path="/courses" element={<CoursesPage />} />
+
+        {/* Lesson view */}
+        <Route
+          path="/courses/:courseId/module/:moduleIndex/lesson/:lessonIndex"
+          element={<LessonPage />}
+        />
+      </Routes>
+    </Router>
+  );
+}
