@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { FaBars, FaTimes, FaUserCircle  } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = useAuth0();
+  const navigate = useNavigate();
 
   const navLinks = [
-    { id: "dashboard", label: "Dashboard" },
-    { id: "courses", label: "All Courses" },
-    { id: "support", label: "Support" },
+    { id: "dashboard", label: "Dashboard", path: "/courses" },
+    { id: "courses", label: "All Courses", path: "/allcourses" },
+    { id: "support", label: "Support", path: "/support" },
   ];
 
   return (
@@ -43,7 +45,7 @@ const Navbar = () => {
                       className="h-10 w-10 rounded-full"
                     />
                   ) : (
-                    <FaUserCircle  className="h-10 w-10 rounded-full bg-[#E6E5FF] p-1 text-[#4A46C5]" />
+                    <FaUserCircle className="h-10 w-10 rounded-full bg-[#E6E5FF] p-1 text-[#4A46C5]" />
                   )}
                   <span className="text-[#0F172A] font-medium">{user.name}</span>
                   <button
@@ -75,17 +77,20 @@ const Navbar = () => {
               className="h-10 w-10 rounded-full"
             />
           ) : (
-            <FaUserCircle  className="h-10 w-10 rounded-full bg-[#E6E5FF] p-1 text-[#4A46C5]" />
+            <FaUserCircle className="h-10 w-10 rounded-full bg-[#E6E5FF] p-1 text-[#4A46C5]" />
           )}
           <div className="ml-3 max-w-[150px]">
-          <p className="font-medium text-[#0F172A] truncate">{user?.name || "User"}</p>
-          <p className="text-sm text-[#0F172A]/70 truncate">{user?.email || ""}</p>
+            <p className="font-medium text-[#0F172A] truncate">
+              {user?.name || "User"}
+            </p>
+          </div>
         </div>
-        </div>
+
         <div className="py-4 flex flex-col gap-2">
           {navLinks.map((link) => (
             <button
               key={link.id}
+              onClick={() => navigate(link.path)}
               className="w-full text-left px-4 py-2 hover:bg-[#E6E5FF] text-[#0F172A] transition-colors duration-200"
             >
               {link.label}
