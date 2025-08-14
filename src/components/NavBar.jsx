@@ -16,12 +16,11 @@ const Navbar = () => {
 
   return (
     <div className="relative">
-      {/* Top navbar */}
-      <nav className="bg-[#FDFEFF] shadow-lg fixed w-full z-50">
+      {/* Top navbar with soft white background */}
+      <nav className="bg-white/90 shadow-lg fixed w-full z-50 backdrop-blur-md">
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              {/* Sidebar toggle */}
               <button
                 onClick={() => setSidebarOpen(!isSidebarOpen)}
                 className="p-2 rounded-md text-[#4A46C5] hover:bg-[#E6E5FF] transition-colors duration-200"
@@ -34,7 +33,6 @@ const Navbar = () => {
               </span>
             </div>
 
-            {/* User + Logout */}
             <div className="flex items-center space-x-4">
               {user && (
                 <div className="flex items-center gap-3">
@@ -45,7 +43,7 @@ const Navbar = () => {
                       className="h-10 w-10 rounded-full"
                     />
                   ) : (
-                    <FaUserCircle className="h-10 w-10 rounded-full bg-[#E6E5FF] p-1 text-[#4A46C5]" />
+                    <FaUserCircle className="h-10 w-10 rounded-full bg-white/20 p-1 text-[#4A46C5]" />
                   )}
                   <span className="text-[#0F172A] font-medium">{user.name}</span>
                   <button
@@ -63,13 +61,13 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Sidebar */}
+      {/* Sidebar with soft white background */}
       <div
-        className={`fixed left-0 top-16 h-full bg-[#FDFEFF] shadow-lg transition-transform duration-300 transform ${
+        className={`fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white/90 shadow-lg backdrop-blur-md transition-transform duration-300 transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } w-64 z-40`}
       >
-        <div className="flex items-center p-4 border-b border-[#E6E5FF]">
+        <div className="flex items-center p-4 border-b border-gray-200">
           {user && user.picture ? (
             <img
               src={user.picture}
@@ -77,7 +75,7 @@ const Navbar = () => {
               className="h-10 w-10 rounded-full"
             />
           ) : (
-            <FaUserCircle className="h-10 w-10 rounded-full bg-[#E6E5FF] p-1 text-[#4A46C5]" />
+            <FaUserCircle className="h-10 w-10 rounded-full bg-white/20 p-1 text-[#4A46C5]" />
           )}
           <div className="ml-3 max-w-[150px]">
             <p className="font-medium text-[#0F172A] truncate">
@@ -90,7 +88,10 @@ const Navbar = () => {
           {navLinks.map((link) => (
             <button
               key={link.id}
-              onClick={() => navigate(link.path)}
+              onClick={() => {
+                setSidebarOpen(false);
+                navigate(link.path);
+              }}
               className="w-full text-left px-4 py-2 hover:bg-[#E6E5FF] text-[#0F172A] transition-colors duration-200"
             >
               {link.label}
