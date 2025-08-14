@@ -1,34 +1,23 @@
-import { useParams } from "react-router-dom";
-import { withAuthenticationRequired } from "@auth0/auth0-react";
+import LessonRender from "../components/LessonRenderer";
 
-function LessonPage() {
-  const { courseId, moduleIndex, lessonIndex } = useParams();
-
-  const dummyLessons = {
-    "1": [
-      { module: "Introduction to AI", lessons: ["What is AI?", "AI History"] },
-      { module: "Machine Learning", lessons: ["Supervised Learning", "Unsupervised Learning"] }
-    ],
-    "2": [
-      { module: "HTML & CSS", lessons: ["HTML Basics", "CSS Basics"] },
-      { module: "JavaScript", lessons: ["JS Basics", "DOM Manipulation"] }
-    ]
-  };
-
-  const courseModules = dummyLessons[courseId] || [];
-  const moduleTitle = courseModules[moduleIndex]?.module || "Unknown Module";
-  const lessonTitle = courseModules[moduleIndex]?.lessons[lessonIndex] || "Unknown Lesson";
+export default function LessonPage() {
+  // Hardcoded lesson content
+  const lessonData = [
+    { type: "heading", text: "Introduction to AI" },
+    { type: "paragraph", text: "Artificial intelligence (AI) is a rapidly evolving field..." },
+    { type: "code", language: "python", text: "print('Hello, AI!')" },
+    { type: "video", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+    {
+      type: "mcq",
+      question: "What is AI?",
+      options: ["A type of robot", "A field of computer science", "A programming language"],
+      answer: 1
+    }
+  ];
 
   return (
-    <div>
-      <h1>Lesson View</h1>
-      <p><strong>Course ID:</strong> {courseId}</p>
-      <p><strong>Module:</strong> {moduleTitle}</p>
-      <p><strong>Lesson:</strong> {lessonTitle}</p>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <LessonRender blocks={lessonData} />
     </div>
   );
 }
-
-export default withAuthenticationRequired(LessonPage, {
-  onRedirecting: () => <div>Loading...</div>,
-});

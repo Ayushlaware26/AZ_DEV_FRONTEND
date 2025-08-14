@@ -1,9 +1,13 @@
-const VideoBlock = ({ url }) => (
-  <div>
-    <video controls width="600">
-      <source src={url} type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-);
-export default VideoBlock;
+export default function VideoBlock({ url }) {
+  return (
+    <div className="w-full aspect-video">
+      <iframe
+        src={url}
+        title="Lesson Video"
+        className="w-full h-full rounded-lg"
+        frameBorder="0"
+        allowFullScreen
+      ></iframe>
+    </div>
+  );
+}
